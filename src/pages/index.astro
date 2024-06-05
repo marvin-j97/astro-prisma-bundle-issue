@@ -1,0 +1,33 @@
+---
+import { PrismaClient } from "../../prisma/prismaclient";
+
+const prismaClientSingleton = () => {
+	return new PrismaClient();
+};
+
+declare const globalThis: {
+	prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+};
+
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
+if (!globalThis.prismaGlobal) {
+	globalThis.prismaGlobal = prisma;
+}
+
+const cnt = await prisma.user.count();
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+		<h1>
+			{cnt} users
+		</h1>
+	</body>
+</html>
