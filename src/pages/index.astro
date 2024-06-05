@@ -1,6 +1,11 @@
 ---
 import { PrismaClient } from "../../prisma/prismaclient";
 
+// Import will work if:
+// (1) Removing "output" in Prisma Schema
+// (2) Running pnpm generate
+// (3) Importing PrismaClient from "@prisma/client" instead
+
 const prismaClientSingleton = () => {
 	return new PrismaClient();
 };
